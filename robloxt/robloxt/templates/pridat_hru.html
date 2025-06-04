@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-header">
+        <h1>Pridať novú hru</h1>
+        <a href="{% url 'hry_list' %}" class="back-button">
+            <i class="fas fa-arrow-left"></i> Späť na zoznam
+        </a>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="game-form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.meno_hry.id_for_label }}">Názov hry:</label>
+            {{ form.meno_hry }}
+            {% if form.meno_hry.errors %}
+            <div class="error-message">
+                {% for error in form.meno_hry.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.obrazok.id_for_label }}">Obrázok hry:</label>
+            <div class="file-input-container">
+                {{ form.obrazok }}
+                <div class="file-input-text">Vyberte obrázok alebo ho pretiahnite sem</div>
+            </div>
+            {% if form.obrazok.errors %}
+            <div class="error-message">
+                {% for error in form.obrazok.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.popis_hry.id_for_label }}">Popis hry:</label>
+            {{ form.popis_hry }}
+            {% if form.popis_hry.errors %}
+            <div class="error-message">
+                {% for error in form.popis_hry.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="submit-button">
+                <i class="fas fa-plus"></i> Pridať hru
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="header">
+    <h1>Roblox hry</h1>
+    {% if user.is_authenticated %}
+    <a href="{% url 'pridat_hru' %}" class="add-button">Pridať novú hru</a>
+    {% endif %}
+</div>
+
+<div class="games-list">
+    {% for hra in hry %}
+    <div class="game-card">
+        {% if hra.obrazok %}
+        <div class="game-image">
+            <img src="{{ hra.obrazok.url }}" alt="{{ hra.meno_hry }}">
+        </div>
+        {% endif %}
+        <div class="game-info">
+            <h2>{{ hra.meno_hry }}</h2>
+            <p class="game-description">{{ hra.popis_hry }}</p>
+            <div class="game-stats">
+                <span class="votes">
+                    <i class="fas fa-star"></i>
+                    {{ hra.hlasy }} hlasov
+                </span>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="no-games">
+        <p>Zatiaľ nie sú pridané žiadne hry.</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'pridat_hru' %}" class="add-button">Pridať prvú hru</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
